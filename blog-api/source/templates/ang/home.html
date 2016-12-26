@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="pt-BR" ng-app="try">
   <head>
@@ -15,51 +16,50 @@
     <link rel="icon" href=""/>
    
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
 
     <!-- Bootstrap CSS MAP -->
-    <link href="css/bootstrap.min.css.map">
+    <link href="{% static 'css/bootstrap.min.css.map' %}">
 
     <!-- Font Awesome CSS  -->
-    <link href="css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static 'css/font-awesome-4.6.3/css/font-awesome.min.css' %}" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="" rel="stylesheet" media="screen">
 
     <!-- JQuery -->
-    <script src="js/vendor/jquery-1.10.1.min.js"></script>
+    <script src="{% static 'js/vendor/jquery-1.10.1.min.js' %}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
 
     <!-- AngularJS Core -->
-    <script src="js/angular-core/angular.js"></script>
-    <script src="js/angular-core/angular-animate.js"></script>
-    <script src="js/angular-core/angular-resource.js"></script>
-    <script src="js/angular-core/angular-route.js"></script>
-    <script src="js/angular-core/angular-touch.js"></script>
+    <script src="{% static 'js/angular-core/angular.js' %}"></script>
+    <script src="{% static 'js/angular-core/angular-animate.js' %}"></script>
+    <script src="{% static 'js/angular-core/angular-resource.js' %}"></script>
+    <script src="{% static 'js/angular-core/angular-route.js' %}"></script>
+    <script src="{% static 'js/angular-core/angular-touch.js' %}"></script>
 
     <!-- Pagination Release 0.11.1 
     https://github.com/michaelbromley/angularUtils/tree/master/src/directives/pagination -->
-    <script src="js/apps/external/dirPagination.js"></script>
+    <script src="{% static 'js/apps/external/dirPagination.js' %}"></script>
 
     <!-- UI Bootstrap Release 2.2.0 -->
-    <script src="js/vendor/ui-bootstrap-tpls-2.2.0.js"></script>
+    <script src="{% static 'js/vendor/ui-bootstrap-tpls-2.2.0.js' %}"></script>
 
     <!-- Project Apps -->
-    <script src="js/apps/app.module.js"></script>
-    <script src="js/apps/app.config.js"></script>
-    <script src="js/apps/core/posts/post.module.js"></script>
-    <script src="js/apps/core/posts/post.service.js"></script>
-    <script src="js/apps/blog-detail/blog-detail.module.js"></script>
-    <script src="js/apps/blog-detail/blog-detail.component.js"></script>
-    <script src="js/apps/blog-list/blog-list.module.js"></script>
-    <script src="js/apps/blog-list/blog-list.component.js"></script>
-    <script src="js/apps/utils/confirm-click/confirm-click.module.js"></script>
-    <script src="js/apps/utils/confirm-click/confirm-click.directive.js"></script>
-    <script src="js/apps/utils/try-nav/try-nav.module.js"></script>
-    <script src="js/apps/utils/try-nav/try-nav.directive.js"></script>
-
+    <script src="{% static 'js/apps/app.module.js' %}"></script>
+    <script src="{% static 'js/apps/app.config.js' %}"></script>
+    <script src="{% static 'js/apps/core/posts/post.module.js' %}"></script>
+    <script src="{% static 'js/apps/core/posts/post.service.js' %}"></script>
+    <script src="{% static 'js/apps/blog-detail/blog-detail.module.js' %}"></script>
+    <script src="{% static 'js/apps/blog-detail/blog-detail.component.js' %}"></script>
+    <script src="{% static 'js/apps/blog-list/blog-list.module.js' %}"></script>
+    <script src="{% static 'js/apps/blog-list/blog-list.component.js' %}"></script>
+    <script src="{% static 'js/apps/utils/confirm-click/confirm-click.module.js' %}"></script>
+    <script src="{% static 'js/apps/utils/confirm-click/confirm-click.directive.js' %}"></script>
+    <script src="{% static 'js/apps/utils/try-nav/try-nav.module.js' %}"></script>
+    <script src="{% static 'js/apps/utils/try-nav/try-nav.directive.js' %}"></script>
   </head>
 
   <body>

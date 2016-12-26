@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR" ng-app="try">
+  <head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Sets initial viewport load and disables zooming  -->
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Try AngularJS 1.5</title>
+
+    <link rel="icon" href=""/>
+   
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Bootstrap CSS MAP -->
+    <link href="css/bootstrap.min.css.map">
+
+    <!-- Font Awesome CSS  -->
+    <link href="css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="" rel="stylesheet" media="screen">
+
+    <!-- JQuery -->
+    <script src="js/vendor/jquery-1.10.1.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <!-- AngularJS Core -->
+    <script src="js/angular-core/angular.js"></script>
+    <script src="js/angular-core/angular-animate.js"></script>
+    <script src="js/angular-core/angular-resource.js"></script>
+    <script src="js/angular-core/angular-route.js"></script>
+    <script src="js/angular-core/angular-touch.js"></script>
+
+    <!-- Pagination Release 0.11.1 
+    https://github.com/michaelbromley/angularUtils/tree/master/src/directives/pagination -->
+    <script src="js/apps/external/dirPagination.js"></script>
+
+    <!-- UI Bootstrap Release 2.2.0 -->
+    <script src="js/vendor/ui-bootstrap-tpls-2.2.0.js"></script>
+
+    <!-- Project Apps -->
+    <script src="js/apps/app.module.js"></script>
+    <script src="js/apps/app.config.js"></script>
+    <script src="js/apps/core/posts/post.module.js"></script>
+    <script src="js/apps/core/posts/post.service.js"></script>
+    <script src="js/apps/blog-detail/blog-detail.module.js"></script>
+    <script src="js/apps/blog-detail/blog-detail.component.js"></script>
+    <script src="js/apps/blog-list/blog-list.module.js"></script>
+    <script src="js/apps/blog-list/blog-list.component.js"></script>
+    <script src="js/apps/utils/confirm-click/confirm-click.module.js"></script>
+    <script src="js/apps/utils/confirm-click/confirm-click.directive.js"></script>
+    <script src="js/apps/utils/try-nav/try-nav.module.js"></script>
+    <script src="js/apps/utils/try-nav/try-nav.directive.js"></script>
+
+  </head>
+
+  <body>
+    <try-nav></try-nav>
+    <div ng-view></div>
+  </body>
+
+</html>

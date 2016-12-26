@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load urlify %}
+
+{% block head_title %}{{ instance.title }} | {{ block.super}}{% endblock head_title %}
+
+{% block post_detail_link %}
+<li><a href="{{ instance.get_absolute_url}}">{{instance.title}}</a></li>
+{% endblock %}
+
+
+<!-- linebreaks faz quebra das linhas  -->
+
+{% block content %}
+
+ <div class="blog-post post-detail-item">
+        <h2 class="blog-post-title">{{ instance.title }}</h2>
+              <p class="blog-post-meta">{{ instance.publish }} by <a href="#">{{ instance.user }}</a>
+              {% if instance.draft %}<span style="color: red;"> - Draft</span>{% endif %}
+              <br/>
+              Tempo de leitura: {% if instance.read_time|time:"i" <= "01" %} menos de 1 minuto {% else %}{{ instance.read_time|time:"i" }} minutos {% endif %}
+
+              <!--{# Read time: {% if instance.read_time <= 1 %} < 1 Minute {% else %}{{ instance.read_time }} minutes {% endif %} #}-->
+              </p>
+              <hr/>
+              {% if instance.image %}
+                  <img class="img-responsive" src="{{ instance.image.url }}"/>
+              {% endif %}
+              <!--  
+                    * instance.content|linebreaks para quebrar linhas,
+                    * instance.content|linebreaksbr mantém o texto justificado,
+                    implementado no CSS
+                    * instance.content|safe para renderizar código HTML
+                    * A classe 'content-markdown' se refere ao markdown
+                    implementado em javascript.html
+                -->
+              <p class="content-markdown">{{ instance.get_markdown }}</p>
+              <hr/>
+              <p>
+              <!-- 'request.build_absolute_uri' retorna a url da página exibida -->
+              <h3 style="padding-bottom: 10px;"><small>Compartilhar:</br>
+                  <a style="padding-right: 10px;" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">Facebook</a>   
+                  <a style="padding-right: 10px;" target="_blank" href="https://twitter.com/home?status={{ instance.content|truncatechars:80|urlify }}%20{{ request.build_absolute_uri }}">Twitter</a>
+                  <a style="padding-right: 10px;" target="_blank" href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Google Plus</a>
+                  <a style="padding-right: 10px;" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ instance.title }}&summary={{ shared_string }} &source={{ request.build_absolute_uri }}">Linkedin</a>
+                  <a style="padding-right: 10px;" target="_blank" href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ shared_string }}">Reddit</a>
+              </small></h3></p>
+
+        <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+
+    
+    <div>
+        <p class="lead">Deixe um comentário</p>
+        {% if request.user.is_authenticated %}
+        <form method="POST" action="."> {% csrf_token  %}
+            {{ form|crispy }}
+            <input class="btn btn-default" type="submit" value="Enviar"></input>
+        </form>
+        {% else %}
+        <h5>Faça o <a href="{% url 'login' %}">login</a> ou <a href="{% url 'register' %}">registre-se</a> para enviar um comentário.<h5>
+        {% endif %}
+        <br/>
+        <hr/>
+        <h4>Comentários <span class="badge">{{comments.count}}</span></h4>
+
+        {% for comment in comments %}
+            <div class="">
+                <hr/>
+                <!-- {#
+                    {{ comment.content_object }} # exibe o título do post
+                    {{ comment.content_object.get_markdown }} # exibe o conteúdo do post
+                #}-->
+
+                <blockquote>
+                    <p> {{ comment.content }} </p>
+                    <footer>
+                        <cite title="Source Title">
+                            {{ comment.user }}
+                            <br/>
+                            {{ comment.timestamp|timesince }} atrás 
+                            {% if request.user.is_authenticated %} 
+                              {% if comment.children.count > 0 %} | 
+                                {{ comment.children.count }} Resposta
+                                  {% if comment.children.count > 1%}s{%endif%}
+                              {% endif %}
+                              | <a class="comment-reply-btn" href="#">Responder</a>
+                            {%endif%} | 
+                            <a href="{{ comment.get_absolute_url }}" target="_blank">Thread</a>
+                        </cite>
+                        <div class="comment-reply">
+                          {% for child_comment in comment.children %}
+                            <blockquote>
+                              <p> {{ child_comment.content }} </p>
+                              <footer>
+                                <cite title="Source Title">
+                                  {{ child_comment.user }}
+                                  <br/>
+                                  {{ child_comment.timestamp|timesince }} atrás
+                                </cite>
+                            </blockquote>
+                          {% endfor %}
+                          {% if request.user.is_authenticated %}
+                          <form method="POST" action="."> {% csrf_token  %}
+                            {{ form|crispy }}
+                            <input type="hidden" name="parent_id" value="{{ comment.id }}"></input>
+                            <input class="btn btn-default" type="submit" value="Responder"></input>
+                          </form>
+                          {% endif %}
+                        </div>
+                </blockquote>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock content %}

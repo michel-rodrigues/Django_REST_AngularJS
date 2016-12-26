@@ -1,0 +1,60 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="">
+
+     <title>
+        {% block head_title %}Blog API{% endblock head_title %}
+    </title>
+
+{% include 'head_css.html' %}
+
+{% block head_extra %} {% endblock %}
+
+  </head>
+
+  <body>
+
+{% include 'navbar.html'  %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-md-12 main">
+              <ol class="breadcrumb">
+                <li><a href="{% url 'posts:list' %}">Home</a></li>
+                {% block post_detail_link %}
+                {% endblock %}
+                {% if not request.user.is_authenticated %}
+                <li class='pull-right'><a href="{% url 'register' %}">Register</a></li>
+                <li class='pull-right'><a href="{% url 'login' %}">Login</a></li>
+                {% else %}
+                <li class='pull-right'><a href="{% url 'logout' %}">Logout</a></li>
+                {% endif %}
+              </ol>
+                {% block content %}
+
+                {% endblock content %}
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="blog-footer">
+      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+
+{% include 'javascript.html' %}
+
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load urlify %}
+
+{% block head_title %}{{ instance.title }} | {{ block.super}}{% endblock head_title %}
+
+
+<!-- linebreaks faz quebra das linhas  -->
+
+{% block content %}
+
+<div class="blog-post post-detail-item">
+  <h4>Excluir comentário</h4>
+  <form method="POST" action="."> {% csrf_token  %}
+    <p>Tem certeza que deseja excluir: "{{ object.content }}"</p>
+    <input class="btn btn-danger" type="submit" value="Apagar"></input>
+    <a class="btn btn-default" href="{{ object.get_absolute_url }}">Voltar</a>
+  </form>
+</div>
+
+{% endblock content %}

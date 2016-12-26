@@ -1,0 +1,90 @@
+{% load staticfiles %}
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write("<script src='{% static "js/jquery.min.js" %}'><\/script>")
+    </script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+    <!-- JQuery
+    ================================================== -->
+
+    <script src="http://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+
+
+    <!-- Markdown
+    ================================================== -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+
+
+    <!-- 
+        Quando a página for carregada (document), executa as funções.
+        Primeira função:
+            $(".content-markdown") se refere a uma classe dentro de uma 
+            tag <p> em 'post_detail.html'.
+            '.this' se refere a '.content-markdown'
+            '.each()' executa uma iteração
+            'marked()' é chamada do script 'Markdown' acima.
+            'console.log()' exibe a saída no console do navegador
+        Segunda função:
+            adiciona a classe 'img-responsive' para tornar responsivas 
+            as imagens adicionadas pelo app 'markdown'
+     -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".content-markdown").each(function(){
+                var content = $(this).text()
+                //console.log(content)
+                var markedContent = marked(content)
+                //console.log(markedContent)
+                $(this).html(markedContent)
+            });
+
+            $(".post-detail-item img").each(function(){
+                $(this).addClass("img-responsive")
+            });
+
+            // implementa o preview do título do post
+            var titleInput = $("#id_title")
+
+            function setTitle(value){
+                $("#preview-title").text(value)
+            }
+            setTitle(titleInput.val())
+
+            // implementa o previw em em tempo real
+            titleInput.keyup(function(){
+                var newTitle = $(this).val()
+                setTitle(newTitle)
+            })
+
+            // implementa o preview do conteúdo do post com imagem responsiva
+            var contentInput = $("#id_content")
+
+            function setContent(value){
+                var markedContent = marked(value)
+                $("#preview-content").html(markedContent)
+                $("#preview-content img").each(function(){
+                    $(this).addClass("img-responsive")
+                })
+            }
+            setContent(contentInput.val())
+
+            // implementa o previw em tempo real
+            contentInput.keyup(function(){
+                var newContent = $(this).val()
+                setContent(newContent)
+            })
+
+            $(".comment-reply-btn").click(function(event){
+              event.preventDefault();
+              $(this).parent().next(".comment-reply").fadeToggle();
+            });
+
+        })
+    </script>

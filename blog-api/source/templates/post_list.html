@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+
+<!-- 
+    "truncatechars: XXX" faz com que aparece apenas a quantidade de 
+    caracteres especificado *com o app 'markdown', buga a exibição de imagens
+    
+    o django também possui um filtro 'markdown'
+
+    "obj.timestamp|timesince" exibe quanto tempo derrecorreu desde a data 
+    armazenada em timestamp
+    
+    "truncatechars_html" pode ser utilizado com a implementação do app 'markdown',
+    o método 'get_markdown' e a JQuery em 'javascript.html'
+
+    "truncatewords_html" para quantidade de palavras
+
+-->
+{% block content %}
+<div class="row">
+    <div class="col-sm-8"></div>
+    <div class="col-sm-4">
+        <form method="GET" action="">
+            <div class="input-group">
+                <input class="form-control"
+                       text="text" 
+                       name="q" 
+                       placeholder="Search posts" 
+                       value="{{ resquest.GET.q }}"
+                />
+                <span class="input-group-btn">
+                    <!-- <input class="btn btn-default" type="submit" value="Search"/> -->
+                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+    {% for obj in object_list  %}
+        <div class="blog-post post-detail-item">
+            <h2 class="blog-post-title"><a href="{% url 'posts:detail' slug=obj.slug %}">{{ obj.title }}</a></h2>
+                <p class="blog-post-meta">{{ obj.publish }} by <a href="#">{{ obj.user }}</a></p>
+               {% if obj.draft %}<p>Staff only: <span style="color: red;">Draft</span></p>{% endif %}
+               {% if obj.publish > today %}<p>Staff only: <span style="color: red;">Future post</span></p>{% endif %}
+<hr/>    
+                {% if obj.image %}
+                    <img class="img-responsive" src="{{ obj.image.url }}"/>
+                {% endif %}
+                <p>{{ obj.get_markdown|truncatewords_html:42 }}</p>
+        </div>
+
+    {% endfor %}
+
+<!-- {# 
+
+ No links de paginação, a expressão "?{{ page_request_var  }}", que
+ originalmente era "?page=", se refere ao que aparece na barra de 
+ endereço. Está ligada a instrução
+
+   page_request_var = 'pagina'
+   page = request.GET.get(page_request_var)
+
+ em view.py, na função 'post_list'. 
+ Por algum motivo, se alterar manualmente para 'page' na barra de endereço,
+ ainda continua funcionando. Deve ser algo interno do Django.
+
+#} -->
+
+<div class="pagination">
+ <nav>
+  <ul class="pager">
+        {% if object_list.has_previous %}
+           <li><a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q  %}&q={{ request.GET.q}}{% endif %}">Next</a></li>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+           <li><a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q  %}&q={{ request.GET.q}}{% endif %}">Previous</a></li>
+        {% endif %}
+   </ul>
+  </nav>
+</div>
+
+{% endblock content %}
+
+{#  
+
+A cada dois ciclos do for loop, indicados pelas duas aspas duplas, insere as tag "<p></p>"
+{% cycle "" "<p></p>"  %}
+
+{% url "posts:detail" id=obj.id %}
+
+{{ obj.get_absolute_url }}" 
+
+{{ obj.update }} 
+
+{{ obj.id }} 
+#}

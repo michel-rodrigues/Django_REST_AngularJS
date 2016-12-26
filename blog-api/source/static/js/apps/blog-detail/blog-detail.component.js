@@ -1,7 +1,7 @@
 'use strict';
 
 blogDetailModule.component('blogDetail', {
-  templateUrl: 'templates/blog-detail.html',
+  templateUrl: '/api/templates/blog-detail.html',
   controller: function(Post, $http, $location, $routeParams, $scope){
 
     // $scope.notFound = true;

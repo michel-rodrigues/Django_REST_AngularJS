@@ -2,7 +2,7 @@
 
 //angular.module('blogList')
 blogListModule.component('blogList', {
-  templateUrl: 'templates/blog-list.html',
+  templateUrl: '/api/templates/blog-list.html',
   controller: function(Post, $rootScope, $scope, $location){
 
     

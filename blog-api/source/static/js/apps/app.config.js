@@ -9,7 +9,7 @@ app.config(function($locationProvider, $routeProvider){
         template: "<blog-list></blog-list>"
       })
       .when("/about", {
-        templateUrl: "/templates/about.html"
+        templateUrl: "/app/templates/about.html"
       })
       .when("/blog", {
         template: "<blog-list></blog-list>"

@@ -3,7 +3,7 @@
 tryNavModule.directive('tryNav', function(Post, $location){
   return {
     restrict: "E",
-    templateUrl: "/templates/nav.html",
+    templateUrl: "/api/templates/nav.html",
     link: function(scope, element, attr){
       scope.items = Post.query();
       scope.selectItem = function($item, $model, $label){

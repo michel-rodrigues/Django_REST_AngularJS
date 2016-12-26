@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <h1 ng-hide="searchQuery">Blog List</h1>
+    <h1 ng-show="searchQuery">Resultados para {{ query }}</h1>
+    <select ng-model='order'>
+      <option value='-publishDate'>Recente</option>
+      <option value='publishDate'>Antigo</option>
+      <option value='-title'>A-Z</option>
+      <option value='title'>Z-A</option>
+    </select>
+    <hr/>
+  </div>
+  <div class="row">
+    <p>Filtrar</p>
+    <input type="text" ng-model="query" class="form-control" placeholder="Filtrar"/>
+    <hr/>
+  </div>
+  <div class="row">
+    <div class="{{ cssClass }}" dir-paginate="item in items | orderBy: order | filter: query | itemsPerPage: 6">
+      <div class="thumbnail">
+        <a ng-if="item.img" href="/blog/{{ item.id }}"><img class="img-responsive" ng-src="{{ item.img}}" alt="post-img"/></a>
+        <div class="caption">
+          <h3><a href="/blog/{{ item.id }}">{{ item.title }}</a></h3><small>{{ item.publishDate }}</small>
+          <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+            Donec id elit non mi porta gravida at eget metus. 
+            Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+          <a href="#" ng-click="goToItem(item)" class="btn btn-primary" role="button">Ver</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span ng-if='items.length == 0'>Nenhum item encontrado</span>
+  <dir class="row">
+    <dir-pagination-controls></dir-pagination-controls>
+  </div>
+</div>

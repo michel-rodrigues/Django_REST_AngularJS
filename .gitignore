@@ -4,6 +4,7 @@
 
 ##
 media_prod/ 
+static_prod/ 
 public/
 
 ## generic files to ignore

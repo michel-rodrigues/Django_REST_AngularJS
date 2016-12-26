@@ -1,1 +1,2 @@
-# Django_REST_AngularJS
+# Django + AngularJS for a Powerful Web Application
+https://www.codingforentrepreneurs.com/projects/django-angularjs/

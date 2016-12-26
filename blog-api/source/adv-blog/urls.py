@@ -17,7 +17,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-
+from django.views.generic.base import TemplateView
 from rest_framework_jwt.views import obtain_jwt_token
 # from rest_framework.authtoken import views
 
@@ -25,16 +25,7 @@ from accounts.views import ( login_view, register_view, logout_view )
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-
-    # Adiciona mais um nível, evita conflito com múltiplos apps
-    # com o mesmo 'name'
-    url(r'^comments/', include('comments.urls', namespace='comments')),
-    url(r'^login/', login_view, name='login'),
-    url(r'^logout/', logout_view, name='logout'),
-    url(r'^register/', register_view, name='register'),
-    url(r'^', include('posts.urls', namespace='posts')),
     # url(r'^api/token/auth/', views.obtain_auth_token),
-
     # Usar URL com barra, na documentação está com traços e por algum motivo
     # não funciona
     url(r'^api/token/auth', obtain_jwt_token),
@@ -48,3 +39,9 @@ if settings.DEBUG:
                           document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [
+        # Deve ser a última urlpattern
+        url(r'', TemplateView.as_view(template_name='ang/home.html')),
+        ]
+

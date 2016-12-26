@@ -1,0 +1,14 @@
+## python files to ignore
+*.pyc
+**/__pycache__/*
+
+##
+media_prod/ 
+public/
+
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out

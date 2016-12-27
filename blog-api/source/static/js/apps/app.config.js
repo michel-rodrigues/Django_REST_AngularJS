@@ -1,8 +1,10 @@
 'use strict';
 
-app.config(function($locationProvider, $routeProvider){
-    
+app.config(function($locationProvider, $resourceProvider, $routeProvider){
+
     $locationProvider.html5Mode({enabled:true}),
+
+    $resourceProvider.defaults.stripTrailingSlashes = false;
 
     $routeProvider
       .when("/", {
@@ -14,7 +16,7 @@ app.config(function($locationProvider, $routeProvider){
       .when("/blog", {
         template: "<blog-list></blog-list>"
       })
-      .when("/blog/:id", {
+      .when("/blog/:slug", {
         template: "<blog-detail></blog-detail>"
       })
       .otherwise({

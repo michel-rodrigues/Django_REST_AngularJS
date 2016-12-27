@@ -17,7 +17,7 @@ blogListModule.component('blogList', {
 
     $scope.goToItem = function(item){
       //$rootScope.$apply(function(){
-        console.log(item);
+        // console.log(item);
         $location.path("/blog/" + item.id);
       //});
     };

@@ -5,16 +5,20 @@ blogDetailModule.component('blogDetail', {
   controller: function(Post, $http, $location, $routeParams, $scope){
 
     // $scope.notFound = true;
-
-    Post.query(function(data){
-      angular.forEach(data, function(post){
-        if (post.id == $routeParams.id){
-          // $scope.notFound = false;
-          $scope.post = post;
-          resetReply();
-        }
-      });
+    
+    Post.get({"slug": $routeParams.slug}, function(data){
+      $scope.post = data;
     });
+
+    //Post.query(function(data){
+    //  angular.forEach(data, function(post){
+    //    if (post.id == $routeParams.id){
+    //      // $scope.notFound = false;
+    //      $scope.post = post;
+    //      resetReply();
+    //    }
+    //  });
+    //});
 
     $scope.deleteComment = function(comment){
       $scope.$apply(

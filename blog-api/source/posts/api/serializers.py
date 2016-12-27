@@ -90,12 +90,12 @@ class PostDetailSerializer(ModelSerializer):
 
 class PostListSerializer(ModelSerializer):
 
-    # url = HyperlinkedIdentityField(
-    #         # view_name é similar ao get_absolute_url
-    #         view_name='posts-api:detail',
-    #         # o default é a pk (primary key)
-    #         lookup_field='slug',
-    #         )
+   # url = HyperlinkedIdentityField(
+   #         # view_name é similar ao get_absolute_url
+   #         view_name='posts-api:detail',
+   #         # o default é a pk (primary key)
+   #         lookup_field='slug',
+   #         )
 
     url = hyperlinked('posts-api:detail')
 
@@ -112,7 +112,7 @@ class PostListSerializer(ModelSerializer):
             # 'update_url',
             'user',
             'title',
-            # 'slug',
+            'slug',
             'content',
             'publish',
             # 'delete_url'

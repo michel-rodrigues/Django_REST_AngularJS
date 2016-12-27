@@ -10,7 +10,7 @@ postModule.factory('Post', function($resource){
       cache: false,
       transformResponse: function(data, headersGetter, status){
         var finalData = angular.fromJson(data);
-        console.log(finalData.results);
+        // console.log(finalData.results);
         return finalData.results;
       }
     },

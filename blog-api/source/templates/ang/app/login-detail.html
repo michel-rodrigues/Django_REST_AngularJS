@@ -1,0 +1,26 @@
+<div class="container">
+  <form class="form-signin" ng-submit="doLogin(user)">
+    <h2 class="form-signin-heading">Login</h2>
+    <label for="inputEmail" class="sr-only">Usuário</label>
+    <input
+        type="text"
+        id="inputEmail" 
+        class="form-control" 
+        placeholder="Usuário"
+        ng-model="user.username"
+        required 
+        autofocus/>
+    <label for="inputPassword" class="sr-only">Senha</label>
+    <input
+        type="password" 
+        id="inputPassword" 
+        class="form-control" 
+        placeholder="Senha" 
+        ng-model="user.password"
+        required/>
+    <div class="checkbox">
+      <label><input type="checkbox" value="remember-me"> Lembre-se de mim</label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+  </form>
+</div> <!-- /container -->

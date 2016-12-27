@@ -28,7 +28,7 @@ urlpatterns = [
     # url(r'^api/token/auth/', views.obtain_auth_token),
     # Usar URL com barra, na documentação está com traços e por algum motivo
     # não funciona
-    url(r'^api/token/auth', obtain_jwt_token),
+    url(r'^api/auth/token/', obtain_jwt_token),
     url(r'^api/users/', include('accounts.api.urls', namespace='users-api')),
     url(r'^api/comments/', include('comments.api.urls', namespace='comments-api')),
     url(r'^api/posts/', include('posts.api.urls', namespace='posts-api')),

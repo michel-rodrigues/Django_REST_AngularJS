@@ -13,5 +13,6 @@ var app = angular.module('try', [
     'blogDetail',
     'blogList',
     'confirmClick',
+    'loginDetail',
     'tryNav'
 ]);

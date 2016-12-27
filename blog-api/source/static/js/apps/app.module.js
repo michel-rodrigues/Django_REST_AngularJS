@@ -3,6 +3,7 @@
 var app = angular.module('try', [
     //AngularJS Core
     'ngAnimate',
+    'ngCookies',
     'ngResource',
     'ngRoute',
     'ngTouch',

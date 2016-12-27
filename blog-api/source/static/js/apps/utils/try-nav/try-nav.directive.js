@@ -1,6 +1,6 @@
 'use strict';
 
-tryNavModule.directive('tryNav', function(Post, $location){
+tryNavModule.directive('tryNav', function(Post, $cookies, $location){
   return {
     restrict: "E",
     templateUrl: "/api/templates/nav.html",
@@ -17,6 +17,16 @@ tryNavModule.directive('tryNav', function(Post, $location){
         $location.path("/blog/").search("q", scope.searchQuery);
         scope.searchQuery = "";
       };
+      scope.userLoggedIn = false;
+      scope.$watch(function(){
+        var token = $cookies.get("token");
+        if(token){
+          scope.userLoggedIn = true;
+        }
+        else {
+          scope.userLoggedIn = false;
+        } 
+      });
     },
   };
 });

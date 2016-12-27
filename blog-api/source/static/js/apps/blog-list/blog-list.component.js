@@ -3,9 +3,8 @@
 //angular.module('blogList')
 blogListModule.component('blogList', {
   templateUrl: '/api/templates/blog-list.html',
-  controller: function(Post, $rootScope, $scope, $location){
+  controller: function(Post, $cookies, $location, $rootScope, $scope){
 
-    
     var q = $location.search().q;
 
     if(q){
@@ -41,7 +40,6 @@ blogListModule.component('blogList', {
       }
       $scope.cssClass = 'col-sm-' + (12 / $scope.numCols)
     };
-
 
     $scope.loadingQuery = false
     $scope.$watch(function(){

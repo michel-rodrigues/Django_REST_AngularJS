@@ -22,6 +22,10 @@ app.config(function($locationProvider, $resourceProvider, $routeProvider){
       .when("/login", {
         template: "<login-detail></login-detail>"
       })
+      .when("/logout", {
+        //template: "<login-detail></login-detail>"
+        redirectTo: "/login"
+      })
       .otherwise({
         template: "<h1>Opss... Not Found - Error 404</h1>"
       })

@@ -37,10 +37,12 @@ blogDetailModule.component('blogDetail', {
         var token = $cookies.get("token")
         if (token){
           var req = {
-            url: "/api/comments/create/?slug=" + slug + "&type=post",
+            url: "/api/comments/create/",
             method: "POST",
             data: {
-              content: $scope.reply.content
+              content: $scope.reply.content,
+              slug: slug,
+              type: 'post'
             },
             headers: {
               authorization: "JWT " + token

@@ -105,6 +105,8 @@ class PostListSerializer(ModelSerializer):
 
     user = UserDetailSerializer(read_only=True)
 
+    # image = SerializerMethodField()
+
     class Meta:
         model = Post
         fields = [
@@ -115,8 +117,16 @@ class PostListSerializer(ModelSerializer):
             'slug',
             'content',
             'publish',
+            'image',
             # 'delete_url'
         ]
+
+    # def get_image(self, obj):
+    #     try:
+    #         image = obj.image.url
+    #     except:
+    #         image = None
+    #     return image
 
     # def get_user(self, obj):
     #     return str(obj.user.username)

@@ -2,12 +2,16 @@
 
 blogDetailModule.component('blogDetail', {
   templateUrl: '/api/templates/blog-detail.html',
-  controller: function(Post, $http, $location, $routeParams, $scope){
+  controller: function(Post, $cookies, $http, $location, $routeParams, $scope){
 
     // $scope.notFound = true;
     
-    Post.get({"slug": $routeParams.slug}, function(data){
+    var slug = $routeParams.slug
+
+    Post.get({"slug": slug}, function(data){
       $scope.post = data;
+      console.log(data);
+      $scope.comments = data.comments; // linha inútil do tutorial
     });
 
     //Post.query(function(data){
@@ -27,15 +31,39 @@ blogDetailModule.component('blogDetail', {
       // someResource.$delete() //API
     };
 
+    // Authorization: JWT {"content":"my new reply to another try"} http://127.0.0.1:8000/api/comments/create/?slug=new-title&type=post&parent_id=13'
+
     $scope.addReply = function(){
-      $scope.post.comments.push($scope.reply);
-      resetReply();
+        var token = $cookies.get("token")
+        if (token){
+          var req = {
+            url: "/api/comments/create/?slug=" + slug + "&type=post",
+            method: "POST",
+            data: {
+              content: $scope.reply.content
+            },
+            headers: {
+              authorization: "JWT " + token
+            }
+          };
+          var requestAction = $http(req);
+          requestAction.success(function(r_data, r_status, r_headers, r_config){
+            $scope.post.comments.push($scope.reply);
+            resetReply();
+          });
+          requestAction.error(function(e_data, e_status, e_headers, e_config){
+            console.log(e_data);
+          });
+        }
+        else {
+          console.log("NO TOKEN");
+        }
     }
 
     function resetReply(){
       $scope.reply = {
-        "id": $scope.post.comments.length + 1,
-        "text": ""
+        id: $scope.post.comments.length + 1,
+        content: ""
       };
     };
 

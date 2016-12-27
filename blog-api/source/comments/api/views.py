@@ -34,29 +34,35 @@ from posts.api.pagination import PostLimitOffsetPagination, PostPageNumberPagina
 from posts.api.permissions import IsOwnerOrReadOnly
 
 from .serializers import (
-        CommentListSerializer,
         CommentDetailSerializer,
         # CommentEditSerializer,
-        create_comment_serializer,
+        CommentCreateSerializer,
+        CommentListSerializer,
         )
 
 
 class CommentCreateAPIView(CreateAPIView):
 
     queryset = Comment.objects.all()
-    # serializer_class = PostCreateUpdateSerializer
-    # permission_classes = [IsAuthenticated]
+    serializer_class = CommentCreateSerializer
+    permission_classes = [IsAuthenticated]
 
-    def get_serializer_class(self):
-        model_type = self.request.GET.get('type')
-        slug = self.request.GET.get('slug')
-        parent_id = self.request.GET.get('parent_id', None)
-        return create_comment_serializer(
-                model_type=model_type,
-                slug=slug,
-                parent_id=parent_id,
-                user=self.request.user
-                )
+    def get_serializer_context(self):
+        context = super(CommentCreateAPIView, self).get_serializer_context()
+        context['user'] = self.request.user
+        return context
+
+    # subtituido por 'serializer_class'
+    # def get_serializer_class(self):
+    #     model_type = self.request.GET.get('type')
+    #     slug = self.request.GET.get('slug')
+    #     parent_id = self.request.GET.get('parent_id', None)
+    #     return create_comment_serializer(
+    #             model_type=model_type,
+    #             slug=slug,
+    #             parent_id=parent_id,
+    #             user=self.request.user
+    #             )
 
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
@@ -87,7 +93,6 @@ class CommentDetailAPIView(DestroyModelMixin,UpdateModelMixin, RetrieveAPIView):
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
-
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
@@ -102,7 +107,6 @@ class CommentListAPIView(ListAPIView):
     pagination_class = PostPageNumberPagination
 
     serializer_class = CommentListSerializer
-
 
     def get_queryset(self, *args, **kwargs):
 

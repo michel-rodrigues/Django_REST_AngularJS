@@ -195,3 +195,7 @@ h6, .h6 {
 .comment-reply {
   display: none;
 }
+
+.btn-group-sm>.btn, .btn-sm {
+  padding: 0px 5px;
+}

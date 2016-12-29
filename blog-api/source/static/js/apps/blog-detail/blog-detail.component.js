@@ -25,7 +25,7 @@ blogDetailModule.component('blogDetail', {
 
     $scope.deleteComment = function(comment){
       Comment.delete(
-          {"id": comment.id},
+          {id: comment.id},
           function(data){
             $scope.post.comments.splice(comment, 1)
           },
@@ -41,7 +41,7 @@ blogDetailModule.component('blogDetail', {
     $scope.updateReply = function(comment){
       Comment.update(
         {
-          "id": comment.id',
+          id: comment.id,
           content: $scope.reply.content,
           slug: slug,
           type: 'post'
@@ -58,10 +58,34 @@ blogDetailModule.component('blogDetail', {
         }
       );
     }
-    $scope.addReply = function(){
+    $scope.addCommentReply = function(reply, parentComment){
+      console.log(reply);
+      console.log(parentComment)
+      Comment.create(
+          {
+          content: reply.content,
+          slug: slug,
+          type: 'post',
+          parent_id: parentComment.id
+        },
+        function(data){
+          //success
+          console.log(data);
+          //$scope.comments.push(data);
+          parentComment.reply_count += 1;
+          reply.content = "";
+          //resetReply();
+        },
+        function(e_data){
+          //error
+          console.log(e_data);
+        }
+      )
+    }
+    $scope.addNewComment = function(){
       Comment.create(
         {
-          content: $scope.reply.content,
+          content: $scope.newComment.content,
           slug: slug,
           type: 'post'
         },

@@ -16,6 +16,7 @@
           <input type="text" ng-model="query" placeholder="Filtrar comentários">
         <ul>
           <li ng-repeat="comment in post.comments | filter: query">
+            <hr/>
             {{ comment.content }}
             <a
               href="#" 
@@ -25,12 +26,18 @@
               style="margin: 10px 5px">
               <strong>X</strong>
             </a>
+            <p>{{ comment.reply_count }} Resposta(s)</p>
+            <p style="color: red;" ng-if="reply.content" >PREVIEW: {{reply.content}}</p>
+            <form ng-submit="addCommentReply(reply, comment)">
+              <textarea ng-model="reply.content"></textarea>
+              <input class="btn btn-default" type="submit">
+            </form>
           </li>
         </ul>
         <hr/>
-        <p style="color: red;" ng-if="reply.content" >PREVIEW: {{reply.content}}</p>
-        <form ng-submit="addReply()">
-          <textarea ng-model="reply.content"></textarea>
+        <p style="color: red;" ng-if="newComment.content" >PREVIEW: {{newComment.content}}</p>
+        <form ng-submit="addNewComment()">
+          <textarea ng-model="newComment.content"></textarea>
           <input class="btn btn-default" type="submit">
         </form>
       </div>

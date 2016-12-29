@@ -1,3 +1,3 @@
 'use strict';
 
-var postModule = angular.module('post', []);
+var postModule = angular.module('core.post', []);

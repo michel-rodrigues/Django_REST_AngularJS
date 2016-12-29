@@ -1,3 +1,3 @@
 'use strict';
 
-var blogListModule = angular.module('blogList', ['post']);
+var blogListModule = angular.module('blogList', ['core.post']);

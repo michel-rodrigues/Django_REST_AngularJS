@@ -2,7 +2,7 @@
 
 blogDetailModule.component('blogDetail', {
   templateUrl: '/api/templates/blog-detail.html',
-  controller: function(Post, $cookies, $http, $location, $routeParams, $scope){
+  controller: function(Comment, Post, $cookies, $http, $location, $routeParams, $scope){
 
     // $scope.notFound = true;
     
@@ -10,8 +10,9 @@ blogDetailModule.component('blogDetail', {
 
     Post.get({"slug": slug}, function(data){
       $scope.post = data;
-      console.log(data);
-      $scope.comments = data.comments; // linha inútil do tutorial
+      Comment.query({"slug": slug, "type": "post"}, function(data){
+        $scope.comment = data;
+      });
     });
 
     //Post.query(function(data){

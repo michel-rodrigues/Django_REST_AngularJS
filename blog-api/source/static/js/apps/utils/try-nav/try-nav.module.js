@@ -1,3 +1,3 @@
 'use strict';
 
-var tryNavModule = angular.module('tryNav', ['post']);
+var tryNavModule = angular.module('tryNav', ['core.post']);

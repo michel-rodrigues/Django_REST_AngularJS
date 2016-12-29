@@ -1,3 +1,3 @@
 'use strict';
 
-var blogDetailModule = angular.module('blogDetail', ['post']);
+var blogDetailModule = angular.module('blogDetail', ['core.comment','core.post']);

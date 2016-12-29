@@ -28,12 +28,7 @@
             </a>
             <p><a href="#" ng-click="isShowReplies = !isShowReplies">{{ comment.reply_count }} Resposta(s)</a></p>
             <div ng-show="isShowReplies">
-              <comment-reply-thread comment="comment"></comment-reply-thread>
-              <p style="color: red;" ng-if="reply.content" >PREVIEW: {{reply.content}}</p>
-              <form ng-submit="addCommentReply(reply, comment)">
-                <textarea ng-model="reply.content"></textarea>
-                <input class="btn btn-default" type="submit">
-              </form>
+              <comment-reply-thread comment="comment" slug="post.slug"></comment-reply-thread>
             </div>
           </li>
         </ul>

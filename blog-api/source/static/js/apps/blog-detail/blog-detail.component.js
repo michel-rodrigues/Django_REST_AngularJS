@@ -6,6 +6,8 @@ blogDetailModule.component('blogDetail', {
     
     var slug = $routeParams.slug
 
+    $scope.commentOrder = '-timestamp';
+
     Post.get({"slug": slug}, function(data){
       $scope.post = data;
       Comment.query({"slug": slug, "type": "post"}, function(data){
@@ -30,7 +32,7 @@ blogDetailModule.component('blogDetail', {
             $scope.post.comments.splice(comment, 1)
           },
           function(e_data){
-            console.log(e_data)
+            //console.log(e_data)
           }
       );
 
@@ -54,7 +56,7 @@ blogDetailModule.component('blogDetail', {
         },
         function(e_data){
           //error
-          console.log(e_data);
+          //console.log(e_data);
         }
       );
     }
@@ -78,7 +80,7 @@ blogDetailModule.component('blogDetail', {
         },
         function(e_data){
           //error
-          console.log(e_data);
+          //console.log(e_data);
         }
       )
     }
@@ -97,7 +99,7 @@ blogDetailModule.component('blogDetail', {
         },
         function(e_data){
           //error
-          console.log(e_data);
+          //console.log(e_data);
         }
       );
     }

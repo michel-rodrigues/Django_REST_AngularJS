@@ -42,9 +42,6 @@ commentModule.factory(
   var commentUpdate = {
     url: "/api/comments/:id/",
     method: "PUT",
-    interceptor: {
-      responseError: LoginRequiredInterceptor
-    },
     //params: {id: "@id"},
     //isArray: false,
     //cache: false,
@@ -52,9 +49,6 @@ commentModule.factory(
   var commentDelete = {
     url: "/api/comments/:id/",
     method: "DELETE",
-    interceptor: {
-      responseError: LoginRequiredInterceptor
-    },
     //params: {id: "@id"},
     //isArray: false,
     //cache: false,

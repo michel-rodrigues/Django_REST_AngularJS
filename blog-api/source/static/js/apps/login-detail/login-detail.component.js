@@ -20,6 +20,7 @@ loginDetailModule.component('loginDetail', {
       $scope.user = {
         username: $cookies.get("username"),
       };
+      window.location.reload()
     };
     $scope.doLogin = function(user){
       console.log(user);
@@ -38,6 +39,7 @@ loginDetailModule.component('loginDetail', {
         $cookies.put("token", r_data.token);
         $cookies.put("username", user.username);
         $location.path("/");
+        window.location.reload()
       });
       requestAction.error(function(e_data, e_status, e_headers, e_config){
         console.log(e_data.non_field_errors[0]) // error

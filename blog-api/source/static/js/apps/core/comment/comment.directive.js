@@ -8,7 +8,14 @@ commentModule.directive('commentReplyThread', function(Comment){
       slug: "=slug",
     },
     template: `
-      <ul><li ng-repeat="reply in replies">{{reply.content}}</li></ul>
+      <ul>
+        <li ng-repeat="reply in replies">
+          {{reply.content}}
+          <br/>
+          via {{ user }} | <a href="#">Remover</a>
+          <hr/>
+        </li>
+      </ul>
       <div ng-hide="replies">
         <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
         <span class="sr-only">Loading...</span>
@@ -48,7 +55,7 @@ commentModule.directive('commentReplyThread', function(Comment){
           },
           function(e_data){
             //error
-            console.log(e_data);
+            //console.log(e_data);
           }
         )
       }

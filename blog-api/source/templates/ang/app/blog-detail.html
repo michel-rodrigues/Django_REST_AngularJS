@@ -26,12 +26,14 @@
               style="margin: 10px 5px">
               <strong>X</strong>
             </a>
-            <p>{{ comment.reply_count }} Resposta(s)</p>
-            <p style="color: red;" ng-if="reply.content" >PREVIEW: {{reply.content}}</p>
-            <form ng-submit="addCommentReply(reply, comment)">
-              <textarea ng-model="reply.content"></textarea>
-              <input class="btn btn-default" type="submit">
-            </form>
+            <p><a href="#" ng-click="isShowReplies = !isShowReplies">{{ comment.reply_count }} Resposta(s)</a></p>
+            <div ng-show="isShowReplies">
+              <p style="color: red;" ng-if="reply.content" >PREVIEW: {{reply.content}}</p>
+              <form ng-submit="addCommentReply(reply, comment)">
+                <textarea ng-model="reply.content"></textarea>
+                <input class="btn btn-default" type="submit">
+              </form>
+            </div>
           </li>
         </ul>
         <hr/>

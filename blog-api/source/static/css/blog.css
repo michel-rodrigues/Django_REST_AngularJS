@@ -196,6 +196,7 @@ h6, .h6 {
   display: none;
 }
 
-.btn-group-sm>.btn, .btn-sm {
+
+.btn-sm {
   padding: 0px 5px;
 }

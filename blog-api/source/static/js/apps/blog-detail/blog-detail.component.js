@@ -60,6 +60,7 @@ blogDetailModule.component('blogDetail', {
         }
       );
     }
+    $scope.reply = {};
     $scope.addCommentReply = function(reply, parentComment){
       console.log(reply);
       console.log(parentComment)
@@ -81,6 +82,7 @@ blogDetailModule.component('blogDetail', {
         function(e_data){
           //error
           //console.log(e_data);
+          scope.replyError = e_data.data;
         }
       )
     }
@@ -96,10 +98,12 @@ blogDetailModule.component('blogDetail', {
           console.log(data);
           $scope.comments.push(data);
           resetReply();
+          $scope.commentError = '';
         },
         function(e_data){
           //error
           //console.log(e_data);
+          $scope.commentError = e_data.data;
         }
       );
     }

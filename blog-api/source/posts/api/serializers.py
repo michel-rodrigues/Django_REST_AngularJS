@@ -84,23 +84,9 @@ class PostDetailSerializer(ModelSerializer):
 
     def get_comments(self, obj):
         cmts_qs = Comment.objects.filter_by_instance(obj)
-        # XXX: Foi necessário passar "context={'request': None}",
-        # do contrário, é levantada a exceção:
-        # "`HyperlinkedIdentityField` requires the request in the serializer
-        # context. Add `context={'request': request}` when instantiating the
-        # serializer."
-        # O que eu não entendo é que na página de erro parece que já está
-        # sendo passado a variável "context":
-        # 89.   comments = CommentListSerializer(cmts_qs, many=True, ).data
-        # ▼ Local vars
-        # Variable: Value
-        # cmts_qs: <QuerySet [<Comment: michel>]>
-        # obj: <Post: Frank>
-        # self: PostDetailSerializer(<Post: Frank>, context={
-        #               'request': <rest_framework.request.Request object>,
-        #               'format': None,
-        #               'view': <posts.api.views.PostDetailAPIView object>
-        #               })
+
+        # Foi necessário passar "context={'request': None}"
+        # http://www.django-rest-framework.org/api-guide/serializers/#absolute-and-relative-urls
         comments = CommentListSerializer(
                         cmts_qs,
                         many=True,

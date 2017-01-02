@@ -31,7 +31,7 @@ class UserDetailSerializer(ModelSerializer):
 class UserCreateSerializer(ModelSerializer):
 
     # Por padrão, o django aceita o campo 'email' com o valor vazio,
-    # atribuir o objeto 'EmailField' a variável 'email', sobre-escrever o campo
+    # atribuir o objeto 'EmailField' a variável 'email', sobrescrever o campo
     # faz com que não seja aceito o campo vazio
     email = EmailField(label='Emdereço de email')
 
@@ -89,7 +89,7 @@ class UserCreateSerializer(ModelSerializer):
 
 
 
-    # Sobre-escreve o método 'create' para implementar a validação da
+    # Sobrescreve o método 'create' para implementar a validação da
     # senha, do contrário, a senha o usuário não será criptografada e o
     # django não aceitara como uma senha válida, o usuário ainda será
     # criado, mas não será possível fazer o login na conta.

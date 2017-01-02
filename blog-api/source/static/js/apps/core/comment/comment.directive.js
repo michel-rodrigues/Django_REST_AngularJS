@@ -22,7 +22,10 @@ commentModule.directive('commentReplyThread', function(Comment){
       </div>
       <p style="color: red;" ng-if="reply.content" >PREVIEW: {{reply.content}}</p>
       <form ng-submit="addCommentReply(reply, comment)">
-        <textarea ng-model="reply.content"></textarea>
+        <div class="form-group" ng-class"{{ "has-error": replyError.content }}">
+          <textarea id="replyText-{{ reply.id }}" class="form-control" ng-model="reply.content"></textarea>
+          <label class="control-label" for="replyText-{{ reply.id}}" ng-if="replyError"><span ng-repeat="error in replyError.content">{{ content.error }}"</span></label>
+        </div>
         <input class="btn btn-default" type="submit">
       </form>`,
     link: function(scope, element, attr){

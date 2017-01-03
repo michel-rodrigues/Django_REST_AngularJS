@@ -1,6 +1,12 @@
 <div class="container">
   <form class="form-signin" ng-submit="doLogin(user)">
     <h2 class="form-signin-heading">Login</h2>
+    <div class="alert alert-danger" ng-show="loginError.non_field_errors">
+      <span ng-repeat="error in loginError.non_field_errors">
+        {{ error }}
+        <br/>
+      </span>      
+    </div>
     <label for="inputEmail" class="sr-only">Usuário</label>
     <input
         type="text"
@@ -18,9 +24,6 @@
         placeholder="Senha" 
         ng-model="user.password"
         required/>
-    <div class="checkbox">
-      <label><input type="checkbox" value="remember-me"> Lembre-se de mim</label>
-    </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
   </form>
 </div> <!-- /container -->

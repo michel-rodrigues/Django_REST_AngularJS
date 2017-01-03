@@ -1,19 +1,51 @@
 'use strict';
 
 blogDetailModule.component('blogDetail', {
-  templateUrl: '/api/templates/blog-detail.html',
+  // templateUrl: '/api/templates/blog-detail.html',
+  template: '<ng-include src="getTemplateUrl()">',
   controller: function(Comment, Post, $cookies, $http, $location, $routeParams, $scope){
-    
+    $scope.loading = true;
+    $scope.post = null;
+    $scope.pageError = false;
+    $scope.notFound = false;
+    $scope.getTemplateUrl = function(){
+      if($scope.loading && $scope.post == null){
+        return '/api/templates/utils/loading-detail.html';
+      }
+      else if ($scope.notFound){
+        return '/api/templates/utils/not-found.html';
+      }
+      else if ($scope.pageError){
+        return '/api/templates/utils/page-error.html';
+      }
+      else{
+        return '/api/templates/blog-detail.html';
+      }
+    };
+
+    function postDataSuccess(data){
+      $scope.loading = false;
+      $scope.post = data;
+      Comment.query({"slug": slug, "type": "post"}, function(data){
+        $scope.comment = data;
+      }); 
+    };
+
+    function postDataError(e_data){
+      $scope.loading = false;
+      if(e_data.status == 404){
+        $scope.notFound = true;
+      }
+      else {
+        $scope.pageError = true;
+      }
+    };
+
     var slug = $routeParams.slug
 
     $scope.commentOrder = '-timestamp';
 
-    Post.get({"slug": slug}, function(data){
-      $scope.post = data;
-      Comment.query({"slug": slug, "type": "post"}, function(data){
-        $scope.comment = data;
-      });
-    });
+    Post.get({"slug": slug}, postDataSuccess, postDataError);
 
     //Post.query(function(data){
     //  angular.forEach(data, function(post){

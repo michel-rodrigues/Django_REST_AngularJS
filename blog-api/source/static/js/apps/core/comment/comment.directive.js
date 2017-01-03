@@ -18,7 +18,7 @@ commentModule.directive('commentReplyThread', function(Comment){
       </ul>
       <div ng-hide="replies">
         <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-        <span class="sr-only">Loading...</span>
+        <span class="sr-only">Carregando...</span>
       </div>
       <p style="color: red;" ng-if="reply.content" >PREVIEW: {{reply.content}}</p>
       <form ng-submit="addCommentReply(reply, comment)">

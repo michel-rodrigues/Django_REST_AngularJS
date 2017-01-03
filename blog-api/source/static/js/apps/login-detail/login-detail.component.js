@@ -10,9 +10,8 @@ loginDetailModule.component('loginDetail', {
       $scope
       ){
     var loginUrl = "/api/auth/token/";
-    $scope.user = {
-    
-    };
+    $scope.loginError = {};
+    $scope.user = {};
     var tokenExists = $cookies.get("token");
     if (tokenExists){
       $scope.loggedIn = true;
@@ -23,7 +22,6 @@ loginDetailModule.component('loginDetail', {
       window.location.reload()
     };
     $scope.doLogin = function(user){
-      console.log(user);
       var reqConfig = {
         method:"POST",
         url: loginUrl,
@@ -44,6 +42,7 @@ loginDetailModule.component('loginDetail', {
       requestAction.error(function(e_data, e_status, e_headers, e_config){
         console.log(e_data.non_field_errors[0]) // error
         console.log(e_data) // error
+        $scope.loginError = e_data
       });
     };
   },

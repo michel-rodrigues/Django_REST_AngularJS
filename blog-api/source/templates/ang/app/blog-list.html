@@ -3,10 +3,10 @@
     <h1 ng-hide="searchQuery">Blog List</h1>
     <h1 ng-show="searchQuery">Resultados para {{ query }}</h1>
     <select ng-model='order'>
-      <option value='-publishDate'>Recente</option>
-      <option value='publishDate'>Antigo</option>
-      <option value='-title'>A-Z</option>
-      <option value='title'>Z-A</option>
+      <option value='-publish'>Recente</option>
+      <option value='publish'>Antigo</option>
+      <option value='title'>A-Z</option>
+      <option value='-title'>Z-A</option>
     </select>
     <hr/>
   </div>
@@ -21,7 +21,7 @@
         <a ng-if="item.image" href="/blog/{{ item.slug }}"><img class="img-responsive" ng-src="{{ item.image }}" alt="post-img"/></a>
         <div class="caption">
           <h3><a href="/blog/{{ item.slug }}">{{ item.title }}</a></h3><small>{{ item.publish }}</small>
-          <p>{{ item.content }}</p>
+          <p>{{ item.content|limitTo:140 }}<span ng-if="item.content.length > 140">...</span></p>
           <a href="#" ng-click="goToItem(item)" class="btn btn-primary" role="button">Ver</a>
         </div>
       </div>

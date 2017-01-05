@@ -12,7 +12,7 @@ blogListModule.component('blogList', {
       $scope.searchQuery = true;
     }
 
-    $scope.order = "-publishDate";
+    $scope.order = "-publish";
 
     $scope.goToItem = function(item){
       //$rootScope.$apply(function(){

@@ -23,7 +23,7 @@ class PostModelAdmin(admin.ModelAdmin):
     # list_display_links = ["updated"]
 
     # exibe os campos em colunas
-    list_display = ['__str__', 'updated', 'timestamp']
+    list_display = ['title', 'updated', 'timestamp']
 
     # implementa um campo de filtro à esquerda da página
     list_filter = ['updated', 'timestamp']

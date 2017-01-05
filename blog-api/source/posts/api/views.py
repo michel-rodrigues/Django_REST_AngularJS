@@ -1,5 +1,5 @@
 from django.db.models import Q
-
+from django.utils import timezone
 from rest_framework.filters import (
         SearchFilter,
         OrderingFilter,
@@ -113,7 +113,7 @@ class PostListAPIView(ListAPIView):
         #  >>> from urllib.parse import quote
         #  >>> string_encoded = quote("Uma string qualquer")
 
-        queryset_list = Post.objects.all()
+        queryset_list = Post.objects.filter(publish__lte=timezone.now())
         query = self.request.GET.get('q')
 
         if query:

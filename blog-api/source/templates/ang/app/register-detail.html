@@ -1,0 +1,50 @@
+<div class="container">
+  <form class="form-signin" ng-submit="doRegister(user)">
+    <h2 class="form-signin-heading">Cadastro</h2>
+    <div class="alert alert-danger" ng-show="loginError.non_field_errors">
+      <span ng-repeat="error in loginError.non_field_errors">
+        {{ error }}
+        <br/>
+      </span>      
+    </div>
+
+    <label for="inputUsername" class="sr-only">Usuário</label>
+    <input
+        type="text"
+        id="inputUsername" 
+        class="form-control" 
+        placeholder="Usuário"
+        ng-model="user.username"
+        required 
+        autofocus/>
+
+    <label for="inputEmail" class="sr-only">Email</label>
+    <input
+        type="email"
+        id="inputEmail" 
+        class="form-control" 
+        placeholder="Email"
+        ng-model="user.email"
+        required/>
+
+    <label for="inputEmailCheck" class="sr-only">Confirmar Email</label>
+    <input
+        type="email"
+        id="inputEmailCheck" 
+        class="form-control" 
+        placeholder="Confirmar Email"
+        ng-model="user.email_check"
+        required/>
+
+    <label for="inputPassword" class="sr-only">Senha</label>
+    <input
+        type="password" 
+        id="inputPassword" 
+        class="form-control" 
+        placeholder="Senha" 
+        ng-model="user.password"
+        required/>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Cadastrar</button>
+  </form>
+</div> <!-- /container -->

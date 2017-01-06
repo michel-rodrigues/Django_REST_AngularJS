@@ -19,6 +19,9 @@ app.config(function($locationProvider, $resourceProvider, $routeProvider){
       .when("/blog/:slug", {
         template: "<blog-detail></blog-detail>"
       })
+      .when("/register", {
+        template: "<register-detail></register-detail>"
+      })
       .when("/login", {
         template: "<login-detail></login-detail>"
       })

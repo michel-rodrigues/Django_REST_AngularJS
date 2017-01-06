@@ -36,17 +36,18 @@ class UserCreateSerializer(ModelSerializer):
     # Por padrão, o django aceita o campo 'email' com o valor vazio,
     # atribuir o objeto 'EmailField' a variável 'email', sobrescrever o campo
     # faz com que não seja aceito o campo vazio
-    email = EmailField(label='Emdereço de email')
-
-    email2 = EmailField(label='Confirme o email')
+    email = EmailField(label='Emdereço de email', write_only=True)
+    email_check = EmailField(label='Confirme o email', write_only=True)
+    token = CharField(allow_blank=True, read_only=True)
 
     class Meta:
         model = User
         fields = [
             'username',
             'email',
-            'email2',
+            'email_check',
             'password',
+            'token',
         ]
 
         # Faz com que a senha não incluida no JSON retornado para exibição
@@ -68,24 +69,24 @@ class UserCreateSerializer(ModelSerializer):
 
     def validate_email(self, value):
         data = self.get_initial()
-        email1 = value
-        email2 = data.get("email2")
+        email = value
+        email_check = data.get("email_check")
 
-        if email1 != email2:
+        if email != email_check:
             raise ValidationError("Os endereços de email precisam ser iguais.")
 
-        user_qs = User.objects.filter(email=email1)
+        user_qs = User.objects.filter(email=email)
         if user_qs.exists():
             raise ValidationError("Esse endereço de email já está registrado.")
 
         return value
 
-    def validate_email2(self, value):
+    def validate_email_check(self, value):
         data = self.get_initial()
-        email1 = data.get("email")
-        email2 = value
+        email = data.get("email")
+        email_check = value
 
-        if email2 != email1:
+        if email_check != email:
             raise ValidationError("Os endereços de email precisam ser iguais.")
 
         return value
@@ -105,6 +106,10 @@ class UserCreateSerializer(ModelSerializer):
                 )
         user_obj.set_password(password)
         user_obj.save()
+
+        payload = jwt_payload_handler(user_obj)
+        token = jwt_encode_handler(payload)
+        validated_data['token'] = token
 
         return validated_data
 

@@ -1,7 +1,7 @@
 'use strict';
 
-loginDetailModule.component('loginDetail', {
-  templateUrl: '/api/templates/login-detail.html',
+registerDetailModule.component('registerDetail', {
+  templateUrl: '/api/templates/register-detail.html',
   controller: function(
       $cookies,
       $http,
@@ -9,24 +9,25 @@ loginDetailModule.component('loginDetail', {
       $routeParams,
       $scope
       ){
-    var loginUrl = "/api/users/login/";
-    $scope.loginError = {};
+    var registerUrl = "/api/users/register/";
+    $scope.registerError = {};
     $scope.user = {};
     var tokenExists = $cookies.get("token");
     if (tokenExists){
-      $scope.loggedIn = true;
-      $cookies.remove("token");
-      $scope.user = {
-        username: $cookies.get("username"),
-      };
-      window.location.reload()
+      // warn user
     };
-    $scope.doLogin = function(user){
+    $scope.doRegister = function(user){
+
+      if(user.email && user.email != user.email_check){
+        $scope.registerError.password = ["Os endereços de email precisam ser iguais."];
+      }
       var reqConfig = {
         method:"POST",
-        url: loginUrl,
+        url: registerUrl,
         data : {
           username: user.username,
+          email: user.email,
+          email_check: user.email_check,
           password: user.password
         },
         headers: {}
@@ -37,11 +38,11 @@ loginDetailModule.component('loginDetail', {
         $cookies.put("token", r_data.token);
         $cookies.put("username", r_data.username);
         $location.path("/");
-        window.location.reload()
+        //window.location.reload()
       });
       requestAction.error(function(e_data, e_status, e_headers, e_config){
-        console.log(e_data.detail) // error
-        $scope.loginError = e_data
+        console.log(e_data) // error
+        $scope.registerError = e_data
       });
     };
   },

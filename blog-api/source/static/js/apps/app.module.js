@@ -6,7 +6,9 @@ var app = angular.module('try', [
     'ngCookies',
     'ngResource',
     'ngRoute',
+    'ngSanitize',
     'ngTouch',
+    'ng-showdown',
     //External
     'angularUtils.directives.dirPagination',
     'ui.bootstrap',

@@ -9,7 +9,7 @@
         <span ng-if="post.image">
           <img class="img-responsive" ng-src="{{ post.image}}" alt="post-img"/>
         </span>
-        <h4>{{ post.content }}</h4>
+        <p markdown-to-html='post.content'></p>
         <hr/>
         <p class="lead">Comentários</p>
         <p style="color: red;" ng-if="newComment.content" >PREVIEW: {{ newComment.content }}</p>

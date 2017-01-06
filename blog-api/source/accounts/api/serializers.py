@@ -11,9 +11,12 @@ from rest_framework.serializers import (
         ValidationError,
         )
 
-from rest_framework.authtoken.models import Token
+from rest_framework_jwt.settings import api_settings
+#from rest_framework.authtoken.models import Token
 
 
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 User = get_user_model()
 
 
@@ -87,8 +90,6 @@ class UserCreateSerializer(ModelSerializer):
 
         return value
 
-
-
     # Sobrescreve o método 'create' para implementar a validação da
     # senha, do contrário, a senha o usuário não será criptografada e o
     # django não aceitara como uma senha válida, o usuário ainda será
@@ -112,14 +113,12 @@ class UserLoginSerializer(ModelSerializer):
 
     token = CharField(allow_blank=True, read_only=True)
     username = CharField(required=False, allow_blank=True)
-    email = EmailField(label='Endereço de email', required=False, allow_blank=True)
 
     class Meta:
         model = User
         fields = [
             'token',
             'username',
-            'email',
             'password',
         ]
 
@@ -132,17 +131,21 @@ class UserLoginSerializer(ModelSerializer):
 
     def validate(self, data):
         user_obj = None
-        email = data.get('email', None)
-        username = data.get('username', None)
+        username_or_email = data.get('username', None)
         password = data['password']
-        if not email and not username:
+        if not username_or_email:
             raise ValidationError('É necessário inserir um nome de usuário ou endereço de email.')
 
         user = User.objects.filter(
-                Q(email=email) |
-                Q(username=username)
+                Q(email=username_or_email) |
+                Q(username=username_or_email)
                 ).distinct()
         user = user.exclude(email__isnull=True).exclude(email__iexact='')
+
+        # Também poderia ser dessa forma:
+        # username = User.objects.filter(username_icontains=username_or_email)
+        # email = User.objects.filter(email_icontains=username_or_email)
+        # user = (username | email).distinct()
 
         if user.exists() and user.count() == 1:
             user_obj = user.first()
@@ -153,8 +156,9 @@ class UserLoginSerializer(ModelSerializer):
             if not user_obj.check_password(password):
                 raise ValidationError('Usuário/email ou senha inválidos.')
 
-            #token = Token.objects.create(user=user_obj)
-            #data['token'] = token.key
-            #print(token.key)
+            payload = jwt_payload_handler(user_obj)
+            token = jwt_encode_handler(payload)
+            data['token'] = token
+            data['username'] = user_obj.username
 
         return data

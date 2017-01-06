@@ -18,6 +18,7 @@ User = get_user_model()
 
 class CommentCreateSerializer(ModelSerializer):
 
+    user = UserDetailSerializer(read_only=True)
     type = serializers.CharField(required=False, write_only=True)
     slug = serializers.SlugField(write_only=True)
     parent_id = serializers.IntegerField(required=False)
@@ -26,6 +27,7 @@ class CommentCreateSerializer(ModelSerializer):
         model = Comment
         fields = [
             'id',
+            'user',
             'type',
             'slug',
             'parent_id',
@@ -88,6 +90,7 @@ class CommentListSerializer(ModelSerializer):
             view_name='comments-api:thread',
             )
 
+    user = UserDetailSerializer(read_only=True)
     reply_count = SerializerMethodField()
 
     class Meta:
@@ -95,6 +98,7 @@ class CommentListSerializer(ModelSerializer):
         fields = [
             'id',
             'url',
+            'user',
             # 'content_type',
             # 'object_id',
             # 'parent',

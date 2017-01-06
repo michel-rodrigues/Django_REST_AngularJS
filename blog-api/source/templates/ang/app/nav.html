@@ -37,7 +37,7 @@
           </form>
           <ul class="nav navbar-nav pull-right">
             <li><a href="/login" ng-hide='userLoggedIn'>Login</a></li>
-            <li><a href="#" ng-show='userLoggedIn'>{{ user.username }}</a></li>
+            <li><a href="#" ng-show='userLoggedIn'>{{ currentUser }}</a></li>
             <li><a href="/logout" ng-show='userLoggedIn'>Logout</a></li>
           </ul>
         </div>

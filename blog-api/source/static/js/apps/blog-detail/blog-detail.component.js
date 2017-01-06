@@ -23,6 +23,10 @@ blogDetailModule.component('blogDetail', {
       }
     };
 
+    if($cookies.get('token')){
+      $scope.currentUser = $cookies.get('username')
+    }
+
     function postDataSuccess(data){
       $scope.loading = false;
       $scope.post = data;
@@ -59,8 +63,9 @@ blogDetailModule.component('blogDetail', {
 
     $scope.deleteComment = function(comment){
       Comment.delete(
-          {id: comment.id},
+          { id: comment.id },
           function(data){
+            var index = $scope.post.comments.indexOf(comment);
             $scope.post.comments.splice(comment, 1)
           },
           function(e_data){

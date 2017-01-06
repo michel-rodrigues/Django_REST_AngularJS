@@ -1,6 +1,6 @@
 'use strict';
 
-commentModule.directive('commentReplyThread', function(Comment){
+commentModule.directive('commentReplyThread', function(Comment, $cookies){
   return {
     restrict: "E",
     scope: {
@@ -12,7 +12,14 @@ commentModule.directive('commentReplyThread', function(Comment){
         <li ng-repeat="reply in replies">
           {{reply.content}}
           <br/>
-          via {{ user }} | <a href="#">Remover</a>
+          por {{ reply.user.username }} | 
+          <a 
+            href="#"
+            confirm-click="Tem certeza?"
+            confirmed-click="deleteComment(reply)"
+            ng-show="reply.user.username == currentUser">
+            Remover
+          </a>
           <hr/>
         </li>
       </ul>
@@ -29,11 +36,14 @@ commentModule.directive('commentReplyThread', function(Comment){
         <input class="btn btn-default" type="submit">
       </form>`,
     link: function(scope, element, attr){
-      var commentId = scope.comment.id
+      if($cookies.get('token')){
+        scope.currentUser = $cookies.get('username')
+      }
       if (scope.comment){
+        var commentId = scope.comment.id
         if (commentId){
           Comment.get(
-            {id: commentId},
+            { id: commentId },
             function(data){
               scope.replies = data.replies
             }
@@ -62,7 +72,19 @@ commentModule.directive('commentReplyThread', function(Comment){
           }
         )
       }
+      scope.deleteCommentReply = function(reply, parentComment){
+        Comment.delete(
+          { id: reply.id },
+          function(data){
+            var index = scope.replies.indexOf(comment);
+            scope.replies.splice(comment, 1)
+          },
+          function(e_data){
+            //console.log(e_data)
+          }
+        );
 
+      }
     }
   };
 });

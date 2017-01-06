@@ -25,9 +25,6 @@ class UserDetailSerializer(ModelSerializer):
         model = User
         fields = [
             'username',
-            'email',
-            'first_name',
-            'last_name',
         ]
 
 
@@ -142,14 +139,14 @@ class UserLoginSerializer(ModelSerializer):
             raise ValidationError('É necessário inserir um nome de usuário ou endereço de email.')
 
         user = User.objects.filter(
-                Q(email=username_or_email) |
-                Q(username=username_or_email)
+                Q(email__iexact=username_or_email) |
+                Q(username__iexact=username_or_email)
                 ).distinct()
         user = user.exclude(email__isnull=True).exclude(email__iexact='')
 
         # Também poderia ser dessa forma:
-        # username = User.objects.filter(username_icontains=username_or_email)
-        # email = User.objects.filter(email_icontains=username_or_email)
+        # username = User.objects.filter(username__iexact=username_or_email)
+        # email = User.objects.filter(email__iexact=username_or_email)
         # user = (username | email).distinct()
 
         if user.exists() and user.count() == 1:

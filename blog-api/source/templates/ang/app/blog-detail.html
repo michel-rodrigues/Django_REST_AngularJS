@@ -26,11 +26,13 @@
           <li ng-repeat="comment in post.comments | orderBy: commentOrder | filter: query">
             <hr/>
             {{ comment.content }}
+            <small>por {{ comment.user.username }}</small>
             <a
               href="#" 
               class="btn btn-sm btn-danger" 
               confirm-click="Tem certeza?" 
               confirmed-click="deleteComment(comment)"
+              ng-show="comment.user.username == currentUser"
               style="margin: 10px 5px">
               <strong>X</strong>
             </a>

@@ -37,7 +37,7 @@ loginDetailModule.component('loginDetail', {
         $cookies.put("token", r_data.token);
         $cookies.put("username", r_data.username);
         $location.path("/");
-        window.location.reload()
+        //window.location.reload()
       });
       requestAction.error(function(e_data, e_status, e_headers, e_config){
         console.log(e_data.detail) // error
